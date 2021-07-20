@@ -26,7 +26,7 @@ const App = () => {
   const [mapZoom, setMapZoom] = useState(2);
 
   useEffect(() => {
-    fetch("https://disease.sh/v3/covid-19/all")
+    fetch("http://localhost:4005/worldwide")
       .then((response) => response.json())
       .then((data) => {
         setCountryInfo(data);
@@ -35,7 +35,7 @@ const App = () => {
 
   useEffect(() => {
     const getCountriesData = async () => {
-      fetch("https://disease.sh/v3/covid-19/countries")
+      fetch("http://localhost:4005/getCountries")
         .then((response) => response.json())
         .then((data) => {
           const countries = data.map((country) => ({
@@ -48,26 +48,21 @@ const App = () => {
           setTableData(sortedData);
         });
     };
-
     getCountriesData();
   }, []);
-
-  console.log(casesType);
 
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
 
     const url =
       countryCode === "worldwide"
-        ? "https://disease.sh/v3/covid-19/all"
-        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+        ? "http://localhost:4005/worldwide"
+        : `http://localhost:4005/country/${countryCode}`;
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setInputCountry(countryCode);
         setCountryInfo(data);
-        console.log("Country data: ",data);
-
         if(countryCode === "worldwide"){
           setMapCenter({ lat: 34.80746, lng: -40.4796 });
           setMapZoom(2);
@@ -76,13 +71,7 @@ const App = () => {
           setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
           setMapZoom(4);
         }
-        // countryCode === "worldwide" ? (
-        //   setMapCenter({ lat: 34.80746, lng: -40.4796 });
-        //   setMapZoom(3);
-        // ) : (
-        //   setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        //   setMapZoom(4);
-        // )
+        
       });
   };
 

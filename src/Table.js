@@ -4,7 +4,9 @@ import numeral from "numeral";
 
 function Table({ countries }) {
   return (
-    <div className="table">
+    <div className="table" >
+      <table className = "innerTable">
+        <tbody>
       {countries.map((country,i) => (
         <tr key ={i}>
           <td>{country.country}</td>
@@ -13,6 +15,8 @@ function Table({ countries }) {
           </td>
         </tr>
       ))}
+      </tbody>
+      </table>
     </div>
   );
 }

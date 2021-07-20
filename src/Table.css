@@ -16,6 +16,10 @@
   border: none;
 }
 
+.innerTable{
+  width: 100%;
+}
+
 .table tr:nth-of-type(odd) {
   background-color: #f3f2f8;
 }
